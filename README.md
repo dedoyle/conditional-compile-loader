@@ -1,6 +1,6 @@
 # conditional-compile-loader
 
-`conditional-compile-loader` 根据设定的参数对 vue、js 和 less 代码进行条件编译。
+`conditional-compile-loader` 根据设定的参数对 vue、js 和 css(less, sass 等) 代码进行条件编译。
 
 ## Getting Started
 
@@ -20,7 +20,10 @@ example.vue
 <template>
   <div>
     <!-- #ifdef FLAG -->
-    <header>If FLAG is true</header>
+    <header>FLAG</header>
+    <!-- #endif -->
+    <!-- #ifdef FLAG-A || FLAG-B -->
+    <header>FLAG-A OR FLAG-B</header>
     <!-- #endif -->
   </div>
 </template>
@@ -29,11 +32,12 @@ example.vue
 example.js
 
 ```js
-const str = 'demo'
 // #ifdef FLAG
-console.log('If FLAG is true')
+console.log('FLAG')
 // #endif
-console.log(str)
+// #ifdef FLAG-A || FLAG-B
+console.log('FLAG-A OR FLAG-B')
+// #endif
 ```
 
 example.less
@@ -42,6 +46,9 @@ example.less
 body {
   /* #ifdef FLAG */
   background: cornflowerblue;
+  /* #endif */
+  /* #ifdef FLAG-A || FLAG-B */
+  background: pink;
   /* #endif */
 }
 ```
@@ -60,7 +67,8 @@ rules: [
         loader: 'conditional-compile-loader',
         options: {
           type: 'vue',
-          FLAG: true
+          FLAG: true,
+          'FLAG-A': true
         }
       }
     ]
@@ -75,7 +83,8 @@ rules: [
         loader: 'conditional-compile-loader',
         options: {
           type: 'js',
-          FLAG: true
+          FLAG: true,
+          'FLAG-B': true
         }
       }
     ]
@@ -90,7 +99,8 @@ rules: [
         loader: 'conditional-compile-loader',
         options: {
           type: 'less',
-          FLAG: true
+          FLAG: true,
+          'FLAG-A': true
         }
       }
     ]
@@ -130,3 +140,20 @@ rules: [
     </tr>
   </tbody>
 <table>
+
+## 错误使用情况
+
+变量名必须严格符合正则 /[A-Z-]+/，否则不会进行条件编译，例如：
+
+```vue
+<template>
+  <div>
+    <!-- #ifdef flag -->
+    <header>FLAG</header>
+    <!-- #endif -->
+    <!-- #ifdef FLAG-a || flag-B -->
+    <header>FLAG-A OR FLAG-B</header>
+    <!-- #endif -->
+  </div>
+</template>
+```
