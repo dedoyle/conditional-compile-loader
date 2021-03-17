@@ -1,7 +1,7 @@
 const plugin = require('../index')
 const fs = require('fs')
 const path = require('path')
-const REG = require('../regex.js')
+const regx = require('../regex.js')
 
 const resolve = (dir) => path.resolve(__dirname, dir)
 
@@ -65,15 +65,35 @@ test('less file FLAG-A false FLAG-B false /* #ifdef FLAG-A || FLAG-B */', () => 
   testOne('example/multiFlag.less', { type: 'less' }, null, /background: pink;/)
 })
 
+test('jsx file FLAG true {/* #ifdef FLAG */}', () => {
+  testOne('example/oneFlag.jsx', { type: 'jsx', FLAG: true }, /<header>FLAG<\/header>/)
+})
+
+test('jsx file FLAG false {/* #ifdef FLAG */}', () => {
+  testOne('example/oneFlag.jsx', { type: 'jsx' }, null, /<header>FLAG<\/header>/)
+})
+
+test('jsx file FLAG-A true {/* #ifdef FLAG-A || FLAG-B */}', () => {
+  testOne('example/multiFlag.jsx', { type: 'jsx', 'FLAG-A': true }, /<header>FLAG-A OR FLAG-B<\/header>/)
+})
+
+test('jsx file FLAG-B true {/* #ifdef FLAG-A || FLAG-B */}', () => {
+  testOne('example/multiFlag.jsx', { type: 'jsx', 'FLAG-B': true }, /<header>FLAG-A OR FLAG-B<\/header>/)
+})
+
+test('jsx file FLAG-B false FLAG-B false {/* #ifdef FLAG-A || FLAG-B */}', () => {
+  testOne('example/multiFlag.jsx', { type: 'jsx' }, null, /<header>FLAG-A OR FLAG-B<\/header>/)
+})
+
+function mockPlugin(src, option) {
+  return plugin.call({ query: option }, src)
+}
+
 function testOne(file, options, reg, notReg) {
   const src = fs.readFileSync(resolve(file), 'utf-8')
   const result = mockPlugin(src, options)
 
   reg && expect(result).toMatch(reg)
   notReg && expect(result).not.toMatch(notReg)
-  expect(result).not.toMatch(REG[options.type])
-}
-
-function mockPlugin(src, option) {
-  return plugin.call({ query: option }, src)
+  expect(result).not.toMatch(regx)
 }

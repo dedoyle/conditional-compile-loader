@@ -1,6 +1,6 @@
 # conditional-compile-loader
 
-`conditional-compile-loader` 根据设定的参数对 vue、js 和 css(less, sass 等) 代码进行条件编译。
+`conditional-compile-loader` 根据设定的参数对 vue、js、jsx 和 css(less, sass 等) 代码进行条件编译。
 
 ## Getting Started
 
@@ -40,6 +40,18 @@ console.log('FLAG-A OR FLAG-B')
 // #endif
 ```
 
+example.jsx
+
+```js
+{/* #ifdef FLAG */}
+<header>FLAG</header>
+{/* #endif */}
+
+{/* #ifdef FLAG-A || FLAG-B */}
+<header>FLAG-A OR FLAG-B</header>
+{/* #endif */}
+```
+
 example.less
 
 ```less
@@ -66,7 +78,6 @@ rules: [
       {
         loader: 'conditional-compile-loader',
         options: {
-          type: 'vue',
           FLAG: true,
           'FLAG-A': true
         }
@@ -74,7 +85,7 @@ rules: [
     ]
   },
   {
-    test: /\.js$/,
+    test: /\.jsx?$/,
     use: [
       {
         loader: 'babel-loader',
@@ -82,7 +93,6 @@ rules: [
       {
         loader: 'conditional-compile-loader',
         options: {
-          type: 'js',
           FLAG: true,
           'FLAG-B': true
         }
@@ -98,7 +108,6 @@ rules: [
       {
         loader: 'conditional-compile-loader',
         options: {
-          type: 'less',
           FLAG: true,
           'FLAG-A': true
         }
@@ -120,12 +129,6 @@ rules: [
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>type</td>
-      <td>{String}</td>
-      <td>'js'</td>
-      <td>资源类型</td>
-    </tr>
     <tr>
       <td>reg</td>
       <td>{Regex}</td>

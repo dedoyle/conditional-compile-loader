@@ -1,6 +1,6 @@
 {
   "name": "conditional-compile-loader",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "A conditional compile loader for webpack. 条件编译 webpack loader。",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "vue",
     "js",
     "less",
+    "jsx",
     "conditional compile"
   ],
   "author": {
