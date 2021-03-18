@@ -1,6 +1,6 @@
 {
   "name": "conditional-compile-loader",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A conditional compile loader for webpack. 条件编译 webpack loader。",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,6 @@
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
-    "conditional-compile-loader": "^1.0.0",
     "jest": "^26.0.1"
   }
 }
