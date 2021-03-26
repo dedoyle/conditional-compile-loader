@@ -1,6 +1,6 @@
 {
   "name": "conditional-compile-loader",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A conditional compile loader for webpack. 条件编译 webpack loader。",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,10 @@
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dedoyle/conditional-compile-loader.git"
   },
   "devDependencies": {
     "jest": "^26.0.1"
