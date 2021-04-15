@@ -4,8 +4,10 @@
   "description": "A conditional compile loader for webpack. 条件编译 webpack loader。",
   "main": "index.js",
   "scripts": {
+    "_____comment": "npm run git -- 'commit-msg'  so you can push and update by a auto way",
+    "git": "git add . && git commit -m",
     "test": "jest",
-    "prepublish": "npm test"
+    "postgit": "npm test && npm version patch && npm publish && git push --all"
   },
   "dependencies": {
     "loader-utils": "^2.0.0"
