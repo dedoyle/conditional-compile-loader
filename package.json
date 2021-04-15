@@ -1,6 +1,6 @@
 {
   "name": "conditional-compile-loader",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A conditional compile loader for webpack. 条件编译 webpack loader。",
   "main": "index.js",
   "scripts": {
